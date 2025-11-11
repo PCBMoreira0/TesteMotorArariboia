@@ -3,6 +3,10 @@
 
 QueueHandle_t serialQueue = NULL;
 
+void initializeQueue(){
+
+}
+
 void clearSerialBuffer()
 {
     while (Serial.available())
