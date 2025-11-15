@@ -4,4 +4,4 @@
 
 extern QueueHandle_t canRXQueue;
 extern QueueHandle_t canTXQueue;
-void can_task(void *parameter);
+void canTask(void *parameter);
