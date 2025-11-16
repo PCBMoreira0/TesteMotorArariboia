@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include "canTasks.hpp"
 
+/// @brief Recebe uma mensagem CAN e printa seu ID e Payload no terminal
+/// @param parameter 
 void sniffer_task(void *parameter){
   while(true){
     twai_message_t message;

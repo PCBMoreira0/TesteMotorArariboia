@@ -11,6 +11,8 @@ QueueHandle_t handshakeQueue = NULL;
 bool handshakeComplete = false;
 QueueHandle_t rpmQueue = NULL;
 
+/// @brief Verifica e envia o RPM para a rpmQueue
+/// @param parameter 
 void rpmReadTask(void *parameter)
 {
   rpmQueue = xQueueCreate(10, sizeof(int));
@@ -60,6 +62,8 @@ void rpmReadTask(void *parameter)
   }
 }
 
+/// @brief Codifica o RPM em uma mensagem CAN e envia para canTXQueue 
+/// @param parameter 
 void motorVCUTask(void *parameter)
 {
   uint16_t rpmToSend = 32000;
@@ -97,6 +101,9 @@ void motorVCUTask(void *parameter)
   }
 }
 
+/// @brief Estabelece a conexão com o MCU. 
+/// @warning O handshake ocorre apenas uma vez, se falhar é necessário reiniciar a aplicação.
+/// @param parameter 
 void motorHandShake(void *parameter)
 {
   handshakeQueue = xQueueCreate(10, sizeof(twai_message_t));
@@ -105,7 +112,7 @@ void motorHandShake(void *parameter)
   }
   handshakeComplete = false;
   Serial.println("Iniciando handshake...");
-  vTaskDelay(pdMS_TO_TICKS(3000));
+  vTaskDelay(pdMS_TO_TICKS(3000)); // 3 segundos para aguardar as mensagens do MCU estabilizarem
   Serial.println("Aguardando pedido do motor...");
   while (true)
   {
@@ -146,6 +153,9 @@ void motorHandShake(void *parameter)
   vTaskDelete(NULL);
 }
 
+
+/// @brief Envia uma cópia de mensagens CAN para outra tarefas
+/// @param parameter 
 void routerTask(void *parameter)
 {
   while (true)

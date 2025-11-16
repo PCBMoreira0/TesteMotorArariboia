@@ -3,10 +3,7 @@
 
 QueueHandle_t serialQueue = NULL;
 
-void initializeQueue(){
-
-}
-
+/// @brief Limpa o buffer serial
 void clearSerialBuffer()
 {
     while (Serial.available())
@@ -15,6 +12,9 @@ void clearSerialBuffer()
     }
 }
 
+
+/// @brief Lida com a lógica de leitura da entrada serial e envia uma string para a serialQueue
+/// @param parameter 
 void serialReadTask(void *parameter)
 {
     serialQueue = xQueueCreate(1, 16 * sizeof(char));
